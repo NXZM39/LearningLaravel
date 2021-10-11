@@ -10,7 +10,9 @@ use Livewire\withPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
 use Intervention\Image\ImageManagerStatic;
+
 
 
 
@@ -19,11 +21,22 @@ class Comments extends Component
 {
     use withPagination;
    // public $comments;
-   protected $paginationTheme = 'bootstrap';
+   //protected $paginationTheme = 'bootstrap';
     public $newComment;
     public $image;
+    public $ticketId = 1;
 
-    protected $listeners = ['fileUpload' => 'handleFileUpload'];
+    protected $listeners = [
+        'fileUpload' => 'handleFileUpload',
+        'ticketSelected',
+
+    ];
+
+    public function ticketSelected($ticketId)
+    {
+        $this->ticketId = $ticketId;
+
+    }
 
     public function handleFileUpload($imageData)
     {
@@ -52,13 +65,15 @@ class Comments extends Component
         $createdComment = Comment::create([
 
             'body'=>$this->newComment,'user_id'=>1,
-            'image'=>$image
+            'image'=>$image,
+            'support_ticket_id'=>$this->ticketId
 
 
         ]);
 
         //$this->comments->prepend($createdComment);
         $this->newComment = "";
+        $this->image ='';
         session()->flash('message','Comment added successfully :)');
 
     }
@@ -66,13 +81,23 @@ class Comments extends Component
     public function storeImage()
     {
         if(!$this->image)
-        return null;
+        {
+            return null;
+        }
+
+        $img   = ImageManagerStatic::make($this->image)->encode('jpg');
+
+        $name = Str::random() . '.jpg';
+        Storage::disk('public')->put($name,$img );
+        return $name;
+
     }
 
     public function remove($commentId)
     {
         $comment = Comment::find($commentId);
         $comment->delete();
+        Storage::disk('public')->delete($comment->image);
         //$this->comments = $this->comments->except($commentId);
         session()->flash('message','Comment is  deleted :(');
         //dd($comment);
