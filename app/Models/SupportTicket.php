@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class SupportTicket extends Model
 {
     use HasFactory;
+
+    public $active;
+
+    protected $listeners =['ticketSelected'];
+
+    public function ticketSelected($ticketId)
+    {
+        $this->active=$ticketId;
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);

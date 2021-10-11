@@ -24,7 +24,7 @@ class Comments extends Component
    //protected $paginationTheme = 'bootstrap';
     public $newComment;
     public $image;
-    public $ticketId = 1;
+    public $ticketId;
 
     protected $listeners = [
         'fileUpload' => 'handleFileUpload',
@@ -107,7 +107,7 @@ class Comments extends Component
     public function render()
     {
         return view('livewire.comments',[
-            'comments'=> Comment::latest()->paginate(2)
+            'comments'=> Comment::where('support_ticket_id', $this->ticketId)->latest()->paginate(2)
         ]);
     }
 }
