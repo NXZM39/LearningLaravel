@@ -21,7 +21,7 @@ class Comments extends Component
 {
     use withPagination;
    // public $comments;
-   //protected $paginationTheme = 'bootstrap';
+   protected $paginationTheme = 'bootstrap';
     public $newComment;
     public $image;
     public $ticketId;

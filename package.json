@@ -17,5 +17,7 @@
         "postcss": "^8.3.9",
         "tailwindcss": "^2.2.16"
     },
-    "dependencies": {}
+    "dependencies": {
+        "turbolinks": "^5.2.0"
+    }
 }
