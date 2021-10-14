@@ -6,7 +6,7 @@ namespace App\Http\Livewire;
 use App\Models\Comment;
 use Carbon\Carbon;
 use Livewire\Component;
-use Livewire\withPagination;
+use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +19,7 @@ use Intervention\Image\ImageManagerStatic;
 
 class Comments extends Component
 {
-    use withPagination;
+    use WithPagination;
    // public $comments;
    protected $paginationTheme = 'bootstrap';
     public $newComment;
