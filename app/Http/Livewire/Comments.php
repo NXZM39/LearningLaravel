@@ -19,7 +19,7 @@ use Intervention\Image\ImageManagerStatic;
 
 class Comments extends Component
 {
-    //use withPagination;
+    use withPagination;
    // public $comments;
    protected $paginationTheme = 'bootstrap';
     public $newComment;
